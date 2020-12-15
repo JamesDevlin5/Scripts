@@ -1,0 +1,15 @@
+#!/usr/bin/env python3
+
+from time import sleep
+
+print("Enter how long to set the timer for.")
+
+hours = int(input("hours>\t"))
+mins = int(input("mins>\t"))
+secs = int(input("secs>\t"))
+
+total_time = int(hours * 3600 + mins * 60 + secs)
+
+print(f"Timing {hours} hours, {mins} mins, {secs} secs ({total_time} seconds)...")
+sleep(total_time)
+print("TIMER EXPIRED")
