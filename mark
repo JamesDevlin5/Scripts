@@ -2,13 +2,18 @@
 
 if [ $# -eq 1 ]
 then
-    OUT="$(mktemp)"
-    pandoc --from gfm --to html --standalone --quiet "$1" > "$OUT"
-    
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        open -a Firefox "$OUT"
-    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        firefox "$OUT"
+    if [ -f "$1" ]
+    then
+        OUT="$(mktemp)"
+        pandoc --from gfm --to html --standalone --quiet "$1" > "$OUT"
+        
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            open -a Firefox "$OUT"
+        elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+            firefox "$OUT"
+        fi
+    else
+        echo "File not found!"
     fi
 else
     echo "Failed to provide markdown file to parse!"
