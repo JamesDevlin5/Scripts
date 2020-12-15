@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+results="$(curl -s "https://api.shrtco.de/v2/shorten?url=$1" | jq -r ".result")"
+
+echo "$results"
+echo "$results" | jq -r ".short_link" | xclip -selection c
