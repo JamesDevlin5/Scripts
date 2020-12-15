@@ -1,0 +1,11 @@
+#!/usr/bin/env python3
+
+import time
+import datetime
+
+t = 0
+
+while True:
+    print("\t" + str(datetime.timedelta(seconds=t)))
+    time.sleep(1)
+    t += 1
