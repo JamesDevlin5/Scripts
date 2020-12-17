@@ -1,25 +1,37 @@
 #!/usr/bin/env sh
 
-# Iterate files in the PWD
-for f in ./*
-do
-    # Extract the file's extension
-    filename=$(basename "$f")
-    ext="${filename##*.}"
-
-    # Ensure that the file has an extension
-    if [ "$filename" = "$ext" ]
+if [ $# -ne 1 ]
+then
+    echo "Must provide the path to the directory to sort."
+    exit 1
+else
+    if [ ! -d "$1" ]
     then
-        ext="NONE"
+        echo "Could not find directory ""#1"
+	exit 1
+    else
+        # Iterate files in the PWD
+        for f in $1
+        do
+            # Extract the file's extension
+            filename=$(basename "$f")
+            ext="${filename##*.}"
+        
+            # Ensure that the file has an extension
+            if [ "$filename" = "$ext" ]
+            then
+                ext="NONE"
+            fi
+        
+            # Check to see if extension directory exists
+            if [ ! -d "$ext" ]
+            then
+                # Create the directory if not previously present
+                mkdir -- "$ext"
+            fi
+        
+            # Move file to the folder named after its extension
+            mv "$f" "$ext"
+        done
     fi
-
-    # Check to see if extension directory exists
-    if [ ! -d "$ext" ]
-    then
-        # Create the directory if not previously present
-        mkdir -- "$ext"
-    fi
-
-    # Move file to the folder named after its extension
-    mv "$f" "$ext"
-done
+fi
