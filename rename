@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+OUT="$(mktemp)"
+
+# Populate array and file with the directory contents
+ORIG_FILES="$(ls)"
+echo "$ORIG_FILES" > "$OUT"
+
+NUM_FILES="$(wc -l "$OUT")"
+
+# Load filenames into editor
+"${EDITOR:-vi}" "$OUT"
+
+# On write, parse file
+NEW_FILES="$(tr '\n' ' ' < "$OUT")"
+
+# Execute move
+
