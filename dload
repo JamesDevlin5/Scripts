@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
-curl --create-dirs --parallel "$@"
+curl --location --create-dirs --parallel "$@"
 
