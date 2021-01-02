@@ -5,7 +5,7 @@ then
     if [ -f "$1" ]
     then
         OUT="$(mktemp)"
-        pandoc --from gfm --to html --standalone --quiet "$1" > "$OUT"
+        pandoc --from gfm --to html --standalone --metadata title="$1" --quiet "$1" > "$OUT"
         
         if [[ "$OSTYPE" == "darwin"* ]]; then
             open -a Firefox "$OUT"
