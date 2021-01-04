@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
 
-file="$(curl -sL https://gitignore.io/api/list | tr ',' '\n' | fzf)"
-curl -sL -o .gitignore https://gitignore.io/api/"$file"
+FILES="$(curl -sL https://gitignore.io/api/list | tr ',' '\n')"
+TARGET=$(echo "$FILES" | fzf --multi --cycle --border)
+curl -sL -o .gitignore https://gitignore.io/api/"$TARGET"
