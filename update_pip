@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+for pkg in $(pip3 list --outdated | tail +3 | cut -d ' ' -f 1 | tr '\n' ' ')
+do
+    pip3 install --upgrade "$pkg"
+done
+
