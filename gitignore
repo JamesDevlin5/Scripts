@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+file="$(curl -sL https://gitignore.io/api/list | tr ',' '\n' | fzf)"
+curl -sL -o .gitignore https://gitignore.io/api/"$file"
