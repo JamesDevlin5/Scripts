@@ -6,13 +6,26 @@ OUT="$(mktemp)"
 ORIG_FILES="$(ls)"
 echo "$ORIG_FILES" > "$OUT"
 
-NUM_FILES="$(wc -l "$OUT")"
+NUM_FILES="$(wc -l < "$OUT")"
 
 # Load filenames into editor
 "${EDITOR:-vi}" "$OUT"
 
+# Ensure same number of files
+if [ "$NUM_FILES" -ne "$(wc -l < "$OUT")" ]
+then
+    echo "Cannot delete a file!"
+    exit 1
+fi
+
 # On write, parse file
 NEW_FILES="$(tr '\n' ' ' < "$OUT")"
 
-# Execute move
+OLD_ARRAY=($ORIG_FILES)
+NEW_ARRAY=($NEW_FILES)
 
+# Execute move
+for i in $(seq 0 $((NUM_FILES-1)))
+do
+    mv -v "${OLD_ARRAY[i]}" "${NEW_ARRAY[i]}"
+done
