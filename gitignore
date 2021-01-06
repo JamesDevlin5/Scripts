@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 
-FILES="$(curl -sL https://gitignore.io/api/list | tr ',' '\n')"
-TARGET=$(echo "$FILES" | fzf --multi --cycle --border)
+TARGET=$(curl -sL https://gitignore.io/api/list | tr ',' '\n' | fzf --multi --cycle --border | tr '\n' ',' | sed 's/,$//')
+echo "Downloading gitignore template for file type(s): ""$TARGET"
 curl -sL -o .gitignore https://gitignore.io/api/"$TARGET"
