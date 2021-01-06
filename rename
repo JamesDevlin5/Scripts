@@ -29,3 +29,5 @@ for i in $(seq 0 $((NUM_FILES-1)))
 do
     mv -v "${OLD_ARRAY[i]}" "${NEW_ARRAY[i]}"
 done
+
+rm -f "$OUT"
