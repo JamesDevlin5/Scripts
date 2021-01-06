@@ -1,3 +1,14 @@
 #!/usr/bin/env sh
 
-netstat -nr | awk '$1 == "default"{print $2}'
+FLAGS=""
+
+if [ "$#" -gt 0 ]
+then
+    case $1 in
+        "4") FLAGS='-finet';;
+        "6") FLAGS='-finet6';;
+        *) echo "Unrecognized option..."; exit 1;;
+    esac
+fi
+
+netstat -nr "$FLAGS" | awk '$1 == "default"{print $2}'
