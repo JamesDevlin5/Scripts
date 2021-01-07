@@ -1,5 +1,12 @@
 #!/usr/bin/env sh
 
 TARGET=$(curl -sL https://gitignore.io/api/list | tr ',' '\n' | fzf --multi --cycle --border | tr '\n' ',' | sed 's/,$//')
+
+if [ -z "$TARGET" ]
+then
+    echo "Did not select any gitignore templates. Exiting..."
+    exit 1
+fi
+
 echo "Downloading gitignore template for file type(s): ""$TARGET"
 curl -sL -o .gitignore https://gitignore.io/api/"$TARGET"
