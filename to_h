@@ -12,6 +12,12 @@ def args():
         '--bits',
         action='store_true',
         help='Indicates the input number is a count of bits, not bytes')
+    parser.add_argument('-r',
+                        '--round',
+                        default=2,
+                        type=int,
+                        help='The number of decimal places to round to',
+                        metavar='DECIMAL_PLACES')
     parser.add_argument(
         'num',
         type=int,
@@ -50,8 +56,8 @@ class Size(Enum):
 # 1 PB
 # Input: Number of bytes
 # Output: Human-readable form of the same size amount
-def to_h(num):
-    smaller = lambda n: round(n / 1024, 2)
+def to_h(num, rnd=2):
+    smaller = lambda n: round(n / 1024, rnd)
     if num < 1024:
         return (num, Size.Byte)
     num = smaller(num)
@@ -67,13 +73,13 @@ def to_h(num):
     return (num, Size.PetaByte)
 
 
-def convert(num, bits=False):
+def convert(num, bits=False, rnd=2):
     if bits:
         if num < 8:
             return (num, Size.Bit)
         else:
-            num = round(num / 8, 2)
-    return to_h(num)
+            num = round(num / 8, rnd)
+    return to_h(num, rnd)
 
 
 def print_size(num, size):
@@ -83,8 +89,8 @@ def print_size(num, size):
 
 if __name__ == "__main__":
     args = args().parse_args()
-    num, bits = args.num, args.bits
+    num, bits, rnd = args.num, args.bits, args.round
     if num < 0:
         print("Cannot convert a negative number to a size...")
         exit(1)
-    print_size(*convert(num, bits))
+    print_size(*convert(num, bits, rnd))
