@@ -41,14 +41,6 @@ class Size(Enum):
             Size.PetaByte: 'PB'
         }
 
-
-def check_bits(num):
-    if num < 8:
-        return (num, Size.Bit)
-    else:
-        return False
-
-
 # 1 B = 8 bits
 # 1 KB = 1,024 bytes
 # 1 MB = 1,024 KB
@@ -75,12 +67,15 @@ def to_h(num):
 
 def convert(num, bits=False):
     if bits:
-        b_val = check_bits(num)
-        if b_val:
-            return (b_val, Size.Bit)
+        if num < 8:
+            return (num, Size.Bit)
         else:
             num = round(num / 8, 2)
     return to_h(num)
+
+def print_size(num, size):
+    sym = Size.symbols()[size]
+    print(f"{num} {sym}")
 
 
 if __name__ == "__main__":
@@ -89,5 +84,4 @@ if __name__ == "__main__":
     if num < 0:
         print("Cannot convert a negative number to a size...")
         exit(1)
-    n, s = convert(num, bits)
-    print(f"{n} {Size.symbols()[s]}")
+    print_size(*convert(num, bits))
