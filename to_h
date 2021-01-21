@@ -41,6 +41,7 @@ class Size(Enum):
             Size.PetaByte: 'PB'
         }
 
+
 # 1 B = 8 bits
 # 1 KB = 1,024 bytes
 # 1 MB = 1,024 KB
@@ -50,18 +51,19 @@ class Size(Enum):
 # Input: Number of bytes
 # Output: Human-readable form of the same size amount
 def to_h(num):
+    smaller = lambda n: round(n / 1024, 2)
     if num < 1024:
         return (num, Size.Byte)
-    num = round(num / 1024, 2)
+    num = smaller(num)
     if num < 1024:
         return (num, Size.KiloByte)
-    num = round(num / 1024, 2)
+    num = smaller(num)
     if num < 1024:
         return (num, Size.MegaByte)
-    num = round(num / 1024, 2)
+    num = smaller(num)
     if num < 1024:
         return (num, Size.TeraByte)
-    num = round(num / 1024, 2)
+    num = smaller(num)
     return (num, Size.PetaByte)
 
 
@@ -72,6 +74,7 @@ def convert(num, bits=False):
         else:
             num = round(num / 8, 2)
     return to_h(num)
+
 
 def print_size(num, size):
     sym = Size.symbols()[size]
