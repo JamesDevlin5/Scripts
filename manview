@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+SEARCH=$1
+
+OUTPUT_TYPE=html
+#OUTPUT_TYPE=pdf
+
+MAN_OPTS=('-a' '-W')
+MATCHES=$(man "${MAN_OPTS[@]}" "$SEARCH")
+
+#echo "$MATCHES" | fzf --tiebreak=index
+
+pandoc --standalone --title-prefix="Manual Docs: " --from man --to $OUTPUT_TYPE "$MATCHES"
+
+
