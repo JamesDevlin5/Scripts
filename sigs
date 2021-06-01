@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+
+echo -e "\n\t\tUnix Shell Signals:\n"
+
+print $signals | tr ' ' '\n' | nl -v 0 -s '  --  ' | column
+
