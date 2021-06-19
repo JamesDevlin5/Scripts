@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 
 curl ipinfo.io 2>/dev/null| jq -r 'del(.readme)'
+
+dig @resolver1.opendns.com A myip.opendns.com +short -4
+

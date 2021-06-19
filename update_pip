@@ -1,8 +1,22 @@
 #!/usr/bin/env sh
 
-for pkg in $(pip3 list --outdated | tail +3 | cut -d ' ' -f 1 | tr '\n' ' ')
+PIP_CMD='pip3'
+
+PKGS=$($PIP_CMD list --outdated | tail +3 | cut -d ' ' -f 1 | tr '\n' ' ')
+NUM_PKGS=${#PKGS[#]}
+
+if [ "$NUM_PKGS" -eq 0 ]
+then
+    echo "Nothing to do..."
+    exit 0
+fi
+
+
+printf "Installing %d packages...\n" "$NUM_PKGS"
+
+for pkg in $PKGS
 do
-    pip3 install --upgrade "$pkg" > /dev/null
+    $PIP_CMD install --upgrade "$pkg" >/dev/null
     echo "Updated:    ""$pkg"
 done
 

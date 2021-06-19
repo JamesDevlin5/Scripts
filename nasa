@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+
+URL=$NASA_API_KEY
+
+if [ -z "$URL" ]
+then
+    echo "%F{red}Please set `NASA_API_KEY` environment variable...%f"
+    echo "exiting..."
+    exit 1
+fi
+    
+
+
+REQUEST=$(curl "$API_URL")
+
+PIC_URL=$(echo "$REQUEST" | jq -r '.hdurl')
+TITLE=$(echo "$REQUEST" | jq -r '.hdurl')
+DESC=$(echo "$REQUEST" | jq -r '.hdurl')
+
+EXT="${PIC_TITLE##*.}"

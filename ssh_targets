@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+TARGETS="$(cat ~/.ssh/config | sed -n "/'^Host /p")"
+echo $TAGETS

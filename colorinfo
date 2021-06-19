@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+
+setopt cbases
+
+# A mapping of various color representation formats
+declare -A color_fmt
+
+# RBG
+function rgb_part () print -P "%03u\n" $1
+color_fmt[RGB]=rgb_part
+
+# Hex
+function hex_part () print -P "%#02X\n" $1
+color_fmt[HEX]=hex_part
+
+$color_fmt[RGB] 100
+$color_fmt[HEX] 100
+
+# print u"\u001b[48;2;10;100;200m        "
+# print u"\u001b[0m        "
+# Or, instead of \u001b in unicode, \x1b in hex
+

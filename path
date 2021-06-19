@@ -1,3 +1,5 @@
 #!/usr/bin/env sh
 
-echo "$PATH" | tr ':' '\n' | awk '{print length, $0}' | sort -n | cut -d' ' -f2-
+echo "$PATH" | tr ':' '\n' | awk '{print length, $0}' | sort -n | cut -d' ' -f2- | ls -Ff | sort -f | $PAGER
+
+ 

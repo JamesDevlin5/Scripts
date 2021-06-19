@@ -1,0 +1,20 @@
+#!/usr/bin/env python3
+
+# For ensure valid packages
+import importlib
+
+# Message Colorization
+from termcolor import colored
+
+# Get module name
+module_name = input("Enter the name of the module to query:\t")
+
+# Import the provided module
+module = importlib.import_module(module_name)
+
+# Ouptut description
+print("Desecription of : {str(colored(module, 'green'))}")
+print()
+print("{colored(module,'grey', attrs=['bold'])}") 
+print()
+
