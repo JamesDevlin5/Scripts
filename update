@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# Ensure root capabilities
+if [ $EUID != 0 ]; then
+  # Attempt to elevate permissions
+  sudo "$0" "$@"
+  exit $?
+fi
+
+cmd_exists() {
+  if [[ -n "$1" ]]; then
+    command -v "$1" &>/dev/null
+    return $?
+  else
+    false
+  fi
+}
+
+if [[ -n '' && $(uname -a) =~ [Uu]buntu ]]; then
+  apt-get update
+  apt-get upgrade -y
+fi
+
+#if [[ command -v rustup &>/dev/null ]]; then
+if false && cmd_exists rustup ; then
+  echo "Rustup exists"
+  rustup update
+else
+  #echo "Rustup isnt here"
+  :
+fi
+
+if false && command -v nvim &>/dev/null; then
+  #nvim -V -es -- 'PackerSync<CR>'
+  nvim "+PackerSync"
+fi
+

@@ -1,9 +1,11 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 PIP_CMD='pip3'
 
-PKGS=$($PIP_CMD list --outdated | tail +3 | cut -d ' ' -f 1 | tr '\n' ' ')
-NUM_PKGS=${#PKGS[#]}
+PKGS=$($PIP_CMD list --outdated | tail +3 | cut -d ' ' -f 1)
+NUM_PKGS=${#PKGS[@]}
+echo "Packages doesn't word split correctly..."
+exit
 
 if [ "$NUM_PKGS" -eq 0 ]
 then
@@ -13,6 +15,7 @@ fi
 
 
 printf "Installing %d packages...\n" "$NUM_PKGS"
+exit
 
 for pkg in $PKGS
 do

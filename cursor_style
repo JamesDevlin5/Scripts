@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Set block cursor
+echo -ne '\e[1 q'
+
+# Set beam cursor
+echo -ne '\e[5 q'
+
