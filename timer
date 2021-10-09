@@ -11,5 +11,7 @@ secs = int(input("secs>\t"))
 total_time = int(hours * 3600 + mins * 60 + secs)
 
 print(f"Timing {hours} hours, {mins} mins, {secs} secs ({total_time} seconds)...")
-sleep(total_time)
-print("TIMER EXPIRED")
+for i in range(total_time):
+    print(f"{str(i).rjust(3, ' ')} seconds")
+    sleep(1)
+print("TIMER EXPIRED!")
