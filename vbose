@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+verbose () {
+	STYLE="\e[33m"
+	PREFIX="[CMD]:\t"
+	RESET="\e[0m"
+	printf "%s%s%s" "${STYLE}" "${PREFIX}" "${RESET}"
+	shift
+	set -x; "$("$*")"
+}

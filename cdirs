@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+TARGET="$(dirs -l -p | fzf)"
+printf "Changing to: %s.\n" "$TARGET"
+

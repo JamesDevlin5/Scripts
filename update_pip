@@ -7,20 +7,26 @@ NUM_PKGS=${#PKGS[@]}
 echo "Packages doesn't word split correctly..."
 exit
 
-if [ "$NUM_PKGS" -eq 0 ]
-then
+if [[ "$NUM_PKGS" -eq 0 ]]; then
     echo "Nothing to do..."
     exit 0
 fi
 
+printf "Installing %02d packages...\n" "$NUM_PKGS"
 
 printf "Installing %d packages...\n" "$NUM_PKGS"
 exit
 
-for pkg in $PKGS
-do
-    $PIP_CMD install --upgrade "$pkg" >/dev/null
-    echo "Updated:    ""$pkg"
+for pkg in "${PKGS[@]}"; do
+#     echo "$pkg"
+#     NAME="$(cut -d ' ' -f 1 <<<"$pkg")"
+#     OLD_VER="$(cut -d ' ' -f 2 <<<"$pkg")"
+#     NEW_VER="$(cut -d ' ' -f 3 <<<"$pkg")"
+
+    printf "  Updating: %s" "$NAME"
+    printf "  |   %s  ==>  %s" "$OLD_VER" "$NEW_VER"
+
+    $PIP_CMD install --upgrade "$NAME" >/dev/null
 done
 
 echo "All pip packages are up-to-date."

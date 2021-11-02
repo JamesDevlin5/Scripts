@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-URL=$NASA_API_KEY
+URL="$NASA_API_KEY"
 
 if [ -z "$URL" ]
 then

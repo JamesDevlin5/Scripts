@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+if [[ $# -eq 0 ]]; then
+    read -r FNAME -p "File Name: "
+else
+    FNAME="$1"
+fi
+
+if [[ ! -z "$XDG_TEMPLATES_DIR" ]]; then
+    TEMPLATE_DIR="$XDG_TEMPLATES_DIR"
+else
+    TEMPLATE_DIR="${HOME}/templates"
+fi
+
+TARGET="${TEMPLATE_DIR}/${FNAME}"
+if [[ -f $TARGET ]]; then
+    cp -v "$TARGET"
