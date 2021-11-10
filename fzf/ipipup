@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Interactive Pip Updater
+
+PIP_CMD="pip3"
+# PIP_CMD="pip"
+# PIP_CMD="python3 -m pip"
+
+SELECTED_PKGS="$($PIP_CMD list --format json --outdated 2>/dev/null |
+  jq -c -r '"Package Name:Current Version:Latest Version\n", (map(del(.latest_filetype) | "\(.name):\(.version):\(.latest_version)") | .[])' |
+  column -t -s":" |
+  fzf --header-lines=1 -m --reverse --delimiter ' ' \
+    --preview='pip3 show {1} | bat --style=plain ---color=always -l properties -H 1' |
+  cut -f1 -d' ' |
+  tr ' ' '\n')"
+
+if [[ -z $SELECTED_PKGS ]]; then
+  printf "No packages selected for upgrade...\n"
+  exit 0
+fi
+
+printf "Selected %d Pip Packages to Upgrade\n" "${#SELECTED_PKGS[@]}"
+
+while read -r PKG; do
+  printf "Installing:    %s\n" "$PKG"
+  printf "%40s\n" '' | tr ' ' '-'
+  while read -r LINE; do
+    printf "  ==> %s\n" "$LINE"
+  done <<<"$("$PIP_CMD" install -U --progress-bar pretty "$PKG" 2>/dev/null)"
+  printf "\n"
+done <<<"${SELECTED_PKGS[@]}"
+
+printf "Done!\n"
+printf " * Installed: %s\n" "${SELECTED_PKGS[*]}"

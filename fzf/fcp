@@ -1,0 +1,6 @@
+
+# Running External Processes without Leaving FZF
+# Shows a preview of (default command's) files
+# The path of the selected target is silently copied to the system clipboard
+
+fzf --bind 'ctrl-v:execute(bat {}),enter:execute-silent(echo {} | pbcopy)+abort'

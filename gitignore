@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-TARGET=$(curl -sL https://gitignore.io/api/list | tr ',' '\n' | fzf --multi --cycle --border | tr '\n' ',' | sed 's/,$//')
+TARGET="$(curl -sL 'https://gitignore.io/api/list' | tr ',' '\n' | fzf --multi --cycle --border --no-preview | tr '\n' ',' | sed 's/,$//')"
 
 if [ -z "$TARGET" ]
 then
