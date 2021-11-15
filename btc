@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-TABLE=$(curl --silent 'https://blockchain.info/ticker' | jq '.USD')
-echo "$TABLE"
-#echo '    '"$(curl 'https://blockchain.info/ticker' --silent | jq -r ".USD.last")"
+#TABLE=$(curl --silent 'https://blockchain.info/ticker' | jq '.USD')
+#echo "$TABLE"
+printf "1   :|:  %'.2f\n" "$(curl 'https://blockchain.info/ticker' --silent | jq -r ".USD.last")"
 
