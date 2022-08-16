@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# Options: bash, tcsh, zsh
+
+BASE_URL='https://raw.githubusercontent.com/git/git/master/contrib/completion/'
+FILE_STEM='git-completion.'
+
+# Prompt
+PS3="Select shell to get completions for: "
+
+select target in bash tcsh zsh
+do
+    # If the user enters a valid but out-of-range number, e.g. 9999
+    if [ -z $target ]; then
+        echo "Invalid shell selection! Exiting..."
+        exit 1
+    fi
+
+    # Filename + Extension
+    TARGET_FILE="${FILE_STEM}${target}"
+    # URL with git-completion file
+    TARGET_URL="${BASE_URL}${TARGET_FILE}"
+    # Place git-completions in home dir
+    TARGET_OUTPUT="${HOME}/${TARGET_FILE}"
+
+    echo "Getting ${TARGET_FILE}..."
+    curl -s -o "${TARGET_OUTPUT}" "${TARGET_URL}"
+    echo "Downloaded to: ${TARGET_OUTPUT}"
+    break
+done
+
+exit 0
