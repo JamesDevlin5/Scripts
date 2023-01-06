@@ -1,6 +1,10 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-#TABLE=$(curl --silent 'https://blockchain.info/ticker' | jq '.USD')
-#echo "$TABLE"
-printf "1   :|:  %'.2f\n" "$(curl 'https://blockchain.info/ticker' --silent | jq -r ".USD.last")"
+YELLOW='\e[1;33m'
+GREEN='\e[1;32m'
+RESET='\e[0m'
+
+PRICE="$(curl 'https://blockchain.info/ticker' --silent | jq -r ".USD.last")"
+PRICE="$(numfmt --format="%'.2f" "${PRICE}")"
+echo -e " ${YELLOW}1 ${RESET}  ==  ${GREEN} ${PRICE}${RESET}"
 
