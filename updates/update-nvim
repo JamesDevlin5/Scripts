@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+GREEN='\e[1;32m'
+RED='\e[1;31m'
+RESET='\e[0m'
+
+# Stable
+#NVIM_URL="https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage"
+# Nightly
+NVIM_URL="https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.appimage"
+
+DOWNLOAD_DIR="$(mktemp -d)"
+APPIMAGE_PATH="${DOWNLOAD_DIR}/nvim.appimage"
+NVIM_PATH="/usr/bin/nvim"
+
+(curl -L "${NVIM_URL}" -o "${APPIMAGE_PATH}" &&
+ chmod u+x "${APPIMAGE_PATH}" &&
+ sudo mv "${APPIMAGE_PATH}" "${NVIM_PATH}" &&
+ echo -e "${GREEN}NeoVim Updated!${RESET}") ||
+ echo -e "${RED}NeoVim Failed to Update...${RESET}"
+
+rm -rf "${DOWNLOAD_DIR}"
+

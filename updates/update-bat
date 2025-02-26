@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+GREEN='\e[1;32m'
+RED='\e[1;31m'
+RESET='\e[0m'
+
+# TODO: Fix bat URL
+BAT_URL="https://github.com/sharkdp/bat/releases/latest/download/bat_0.24.0_amd64.deb"
+
+DOWNLOAD_DIR="$(mktemp -d)"
+DEB_PATH="${DOWNLOAD_DIR}/bat.deb"
+BAT_PATH="${HOME}/.local/bin/bat"
+
+(curl -L "${BAT_URL}" -o "${DEB_PATH}" &&
+ sudo dpkg -i "${DEB_PATH}" &&
+ echo -e "${GREEN}Bat Updated!${RESET}") ||
+ echo -e "${RED}Bat Failed to Update...${RESET}"
+
+rm -rf "${DOWNLOAD_DIR}"

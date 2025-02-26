@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+GREEN='\e[1;32m'
+RED='\e[1;31m'
+RESET='\e[0m'
+
+DOWNLOAD_DIR="$(mktemp -d)"
+TAR_PATH="${DOWNLOAD_DIR}/lazygit.tar.gz"
+UNZIP_PATH="${DOWNLOAD_DIR}/lazygit"
+
+LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
+echo "Installing LazyGit Version ${LAZYGIT_VERSION}"
+curl -Lo "${TAR_PATH}" "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+tar xf "${TAR_PATH}" "${UNZIP_PATH}"
+sudo install "${UNZIP_PATH}" -D -t /usr/local/bin/ &&
+    echo -e "${GREEN}LazyGit Updated!${RESET}" ||
+    echo -e "${RED}LazyGit Failed to Update...${RESET}"
+
+rm -rf "${DOWNLOAD_DIR}"
+
+# Bang waits until command finishes before exiting
+nvim --headless "+Lazy! sync" +qa
+
+if [ "$?" -eq 0 ]; then
+    echo -e "${GREEN}NeoVim Plugins Updated!${RESET}"
+else
+    echo -e "${RED}Neovim Plugins Failed to Update...${RESET}"
+fi
+

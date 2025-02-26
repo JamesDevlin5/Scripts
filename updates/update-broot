@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+GREEN='\e[1;32m'
+RED='\e[1;31m'
+RESET='\e[0m'
+
+BROOT_URL="https://dystroy.org/broot/download/x86_64-linux/broot"
+
+DOWNLOAD_DIR="$(mktemp -d)"
+DOWNLOAD_PATH="${DOWNLOAD_DIR}/broot"
+INSTALL_PATH="${HOME}/.local/bin/broot"
+
+(curl -o "${DOWNLOAD_PATH}" -L "${BROOT_URL}" &&
+  mv "${DOWNLOAD_PATH}" "${INSTALL_PATH}" &&
+  echo -e "${GREEN}Broot Updated!${RESET}" ||
+  echo -e "${RED}Broot Failed to Update...${RESET}")
+
+rm -rf "${DOWNLOAD_DIR}"

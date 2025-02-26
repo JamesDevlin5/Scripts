@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+GREEN='\e[1;32m'
+RED='\e[1;31m'
+RESET='\e[0m'
+
+STYLUA_URL="https://github.com/JohnnyMorganz/StyLua/releases/latest/download/stylua-linux-x86_64.zip"
+
+DOWNLOAD_DIR="$(mktemp -d)"
+ZIP_PATH="${DOWNLOAD_DIR}/stylua.zip"
+ARTIFACT_PATH="${DOWNLOAD_DIR}/stylua"
+STYLUA_PATH="/usr/bin/stylua"
+
+(curl -L "${STYLUA_URL}" -o "${ZIP_PATH}" &&
+    unzip "${ZIP_PATH}" stylua -d "${DOWNLOAD_DIR}" &&
+    sudo mv "${ARTIFACT_PATH}" "${STYLUA_PATH}" &&
+    echo -e "${GREEN}StyLua Updated!${RESET}") ||
+    echo -e "${RED}StyLua Failed to Update...${RESET}"
+
+rm -rf "${DOWNLOAD_DIR}"
+
