@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+GREEN='\e[1;32m'
+RED='\e[1;31m'
+RESET='\e[0m'
+
+WEZTERM_URL="https://github.com/wezterm/wezterm/releases/download/nightly/WezTerm-nightly-Ubuntu20.04.AppImage"
+
+DOWNLOAD_DIR="$(mktemp -d)"
+APPIMAGE_PATH="${DOWNLOAD_DIR}/wezterm.appimage"
+WEZTERM_PATH="/usr/bin/wezterm"
+
+(curl -L "${WEZTERM_URL}" -o "${APPIMAGE_PATH}" &&
+ chmod u+x "${APPIMAGE_PATH}" &&
+ sudo mv "${APPIMAGE_PATH}" "${WEZTERM_PATH}" &&
+ echo -e "${GREEN}Wezterm Updated!${RESET}") ||
+ echo -e "${RED}Wezterm Failed to Update...${RESET}"
+
+rm -rf "${DOWNLOAD_DIR}"
+
